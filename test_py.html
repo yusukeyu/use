@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Format</title>
+    <link rel="stylesheet" href="./github-dark.min.css">
+    <style>
+        body { font-family: "Consolas", "Monaco", sans-serif; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        pre { background: #1e1e1e; padding: 10px; border: 1px solid #333; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+
+    <h2>Title</h2>
+    <pre><code id="code-container" class="language-python">Loading...</code></pre>
+
+    <script src="./highlight.min.js"></script>
+    <script>
+        fetch('./codes/test.py')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ERROR: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                const codeContainer = document.getElementById('code-container');
+                codeContainer.textContent = text; 
+                hljs.highlightElement(codeContainer);
+            })
+            .catch(error => {
+                document.getElementById('code-container').textContent = `Read ERROR: ${error.message}. Do "python3.xx -m http.server"`;
+            });
+    </script>
+</body>
+</html>
